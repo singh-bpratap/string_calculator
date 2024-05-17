@@ -16,7 +16,7 @@ RSpec.describe StringCalculator do
       end
     end
 
-    context "empty string input" do
+    context "empty string input should be accepted" do
       it "returns 0" do
         expect(StringCalculator.add("")).to eq(0)
         expect(StringCalculator.add(" ")).to eq(0)
@@ -25,17 +25,53 @@ RSpec.describe StringCalculator do
       end
     end
 
-    context "empty array input" do
+    context "empty list input should be accepted" do
       it "returns 0" do
         expect(StringCalculator.add([])).to eq(0)
       end
     end
 
-    context "array with empty elements input" do
+    context "list with empty elements in input should be accepted" do
       it "returns 0" do
         expect(StringCalculator.add([nil])).to eq(0)
+        expect(StringCalculator.add([nil, 3])).to eq(3)
         expect(StringCalculator.add([""])).to eq(0)
+        expect(StringCalculator.add(["", 4])).to eq(4)
         expect(StringCalculator.add([nil, ""])).to eq(0)
+        expect(StringCalculator.add([nil, "", 2])).to eq(2)
+        expect(StringCalculator.add(nil, "", 2)).to eq(2)
+      end
+
+      it "returns the sum of numbers other than empty elements" do
+        expect(StringCalculator.add([nil, 3])).to eq(3)
+        expect(StringCalculator.add(["", 4])).to eq(4)
+        expect(StringCalculator.add([nil, "", 2])).to eq(2)
+        expect(StringCalculator.add(nil, "", 2)).to eq(2)
+      end
+    end
+
+    context "numbers as string or integer or both in input should be accepted" do
+      it "returns sum of numbers" do
+        expect(StringCalculator.add(1, 2)).to eq(3)
+        expect(StringCalculator.add("1", "2")).to eq(3)
+        expect(StringCalculator.add("1", 2)).to eq(3)
+      end
+    end
+
+    context "numbers or array of numbers or both in input should be accepted" do
+      it "returns sum of numbers" do
+        expect(StringCalculator.add(1, 2)).to eq(3)
+        expect(StringCalculator.add([1, 2])).to eq(3)
+        expect(StringCalculator.add(1, [2, 3])).to eq(6)
+        expect(StringCalculator.add([1, 2], 3)).to eq(6)
+      end
+    end
+
+    context "comma separated numbers in input should be accepted" do
+      it "returns sum of numbers" do
+        expect(StringCalculator.add("1, 2")).to eq(3)
+        expect(StringCalculator.add("1, 2", "3")).to eq(6)
+        expect(StringCalculator.add("1, 2", 3)).to eq(6)
       end
     end
   end

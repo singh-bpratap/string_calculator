@@ -11,10 +11,17 @@ class StringCalculator
     @numbers = [*args]
                .flatten
                .compact
-               .map{|element| element.to_i}
+               .map{|element| sanitize_number(element)}
+               .flatten
   end
 
   def add
     numbers.sum
+  end
+
+  private
+
+  def sanitize_number(element)
+    element.to_s.split(/\s*,\s*/).map(&:to_i)
   end
 end
