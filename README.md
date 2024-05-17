@@ -1,1 +1,1 @@
-# string_calculator
+# TDD Assessment (String Calculator)
