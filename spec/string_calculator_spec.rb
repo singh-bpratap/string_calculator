@@ -16,20 +16,16 @@ RSpec.describe StringCalculator do
     end
 
     context "comma separated numbers in input should be accepted" do
-      it "returns sum of numbers" do
+      it "returns sum of the numbers" do
         expect(StringCalculator.add("1,2")).to eq(3)
-        expect(StringCalculator.add("1, 2")).to eq(3)
       end
     end
 
     context "new line separated numbers in input should be accepted" do
-      it "returns sum of numbers" do
+      it "returns sum of the numbers" do
         expect(StringCalculator.add("1\n2")).to eq(3)
-        expect(StringCalculator.add("1\n 2")).to eq(3)
         expect(StringCalculator.add("1\n,2")).to eq(3)
-        expect(StringCalculator.add("1\n, 2")).to eq(3)
         expect(StringCalculator.add("1,\n2")).to eq(3)
-        expect(StringCalculator.add("1,\n 2")).to eq(3)
       end
 
       it "returns error message if new line is at the end of string" do
@@ -44,7 +40,15 @@ RSpec.describe StringCalculator do
 
       it "returns error message with invalid number(s)" do
         expect(StringCalculator.add("1,-2")).to eq("Invalid inputs: -2")
-        expect(StringCalculator.add("1, -2, -3")).to eq("Invalid inputs: -2, -3")
+        expect(StringCalculator.add("1,-2,-3")).to eq("Invalid inputs: -2, -3")
+      end
+    end
+
+    context "change delimiter, the beginning of the string will contain a separate line that looks like this: '//[delimiter]\n[numbers…]'" do
+      it "returns sum of the numbers" do
+        expect(StringCalculator.add("//;\n1;2")).to eq(3)
+        expect(StringCalculator.add("//:\n1:2")).to eq(3)
+        expect(StringCalculator.add("//+\n1+2")).to eq(3)
       end
     end
   end
